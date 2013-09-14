@@ -1,6 +1,10 @@
-## Skyline
+Skyline
+=======
 
 [![Build Status](https://travis-ci.org/etsy/skyline.png)](https://travis-ci.org/etsy/skyline)
+
+Introduction
+------------
 
 ![x](https://raw.github.com/etsy/skyline/master/screenshot.png)
 
@@ -17,20 +21,24 @@ viewed and acted upon.
 
 Read the details in the [wiki](https://github.com/etsy/skyline/wiki).
 
-## Install
+Instalation
+-----------
 
-1. Ensure you have all the python libraries and pip, on Debian Wheezy you will also require python-dev
+### Python 
+
+Ensure you have all the python libraries and pip, on Debian Wheezy you will also require python-dev.
 
 ```bash
 sudo apt-get install python-dev python-pip
 ```
 
-2. `sudo pip install -r requirements.txt` for the easy bits
+Install known requirements for pip.
 
-3. Install numpy, scipy, pandas, patsy, statsmodels, msgpack_python in that
-order.
+`sudo pip install -r requirements.txt` 
 
-On Debian Wheezy you will have numpy, scipy and statsmodels in ports and the remainers in pip
+Install numpy, scipy, pandas, patsy, statsmodels, msgpack_python in that order.
+
+On Debian Wheezy you will have numpy, scipy and statsmodels in ports and the remainers in pip.
 
 ```bash
 sudo apt-get install python-numpy python-scipy python-scikits.statsmodels
@@ -39,28 +47,33 @@ sudo pip install patsy msgpack_python
 
 You may have trouble with SciPy. If you're on a Mac, try:
 
-* `sudo port install gcc48`
-* `sudo ln -s /opt/local/bin/gfortran-mp-4.8 /opt/local/bin/gfortran`
-* `sudo pip install scipy`
+```bash 
+sudo port install gcc48
+sudo ln -s /opt/local/bin/gfortran-mp-4.8 /opt/local/bin/gfortran
+sudo pip install scipy
+```
 
 On Centos, yum should do the trick. If not, hit the Googles, yo.
 
-4. Copy example file for settings, this is where you'll add the Graphite host and more.
+### Configuration
+
+Copy example file for settings, this is where you'll add the Graphite host and more.
 
 `cp src/settings.py.example src/settings.py`
 
 If using Vagrant you will need to forward the web application as well as update the bound IP.
+
 On Vagrantfile:
 
 ```config.vm.network :forwarded_port, guest: 1500, host: 1500```
 
-And on src/settings.py
+And on src/settings.py:
 
 ```python
 WEBAPP_IP = ‘0.0.0.0'
 ```
 
-5. Add directories: 
+Add directories: 
 
 ``` 
 sudo mkdir /var/log/skyline
@@ -68,15 +81,17 @@ sudo mkdir /var/run/skyline
 sudo mkdir /var/log/redis
 ```
 
-6. Download and install the latest Redis release
+### Redis 
+
+Download and install the latest Redis release.
 
 On Debian Wheezy you will have the current Redis version available on the backport. After updating the source.list and updating you will be able to install 2.6.
 
-On /etc/apt/sources.list add
+On /etc/apt/sources.list:
 
 ```deb http://{SOURCE}.debian.org/debian/ wheezy-backports main```
 
-Replacing {SOURCE} with your current configuration URL
+Replacing {SOURCE} with your current configuration URL.
 
 ```bash
 sudo apt-get update
@@ -87,17 +102,22 @@ When Redis is installed it might start running with the default config, don't fo
 
 ```sudo pkill redis-server```
 
-7. Start 'er up
+### Start 'er up
 
-* `cd skyline/bin`
-* `sudo redis-server redis.conf`
-* `sudo ./horizon.d start`
-* `sudo ./analyzer.d start`
-* `sudo ./webapp.d start`
+```bash
+cd skyline/bin
+sudo redis-server redis.conf
+sudo ./horizon.d start
+sudo ./analyzer.d start
+sudo ./webapp.d start
+```
 
 By default, the webapp is served on port 1500.
 
-8. Check the log files to ensure things are running.
+Check the log files to ensure things are running.
+
+Extras
+-------
 
 ### Gotchas
 
